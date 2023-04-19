@@ -73,8 +73,7 @@
             if(event.data !== undefined && event.data !== "undefined") {
                 pmPre.innerText = `${JSON.stringify(event.data, null, 2)}\n\n${pmPre.innerText}`
             }
-        })    
-        window.postMessage({ name: "sp.readyForConsent" }, "*")
+        })
     </script>
 </body>
 </html>
