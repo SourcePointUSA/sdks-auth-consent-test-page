@@ -3,7 +3,7 @@ A GitHub hosted webpage used by the SDK to showcase and test authenticated conse
 
 Make sure to load the page's url with the following query params:
 ```
-https://sourcepointusa.github.io/sdks-auth-consent-test-page/?_sp_version=DIA-1874&_sp_pass_consent=true
+https://sourcepointusa.github.io/sdks-auth-consent-test-page/?_sp_version=4.9.0&_sp_pass_consent=true
 ```
 
 * `_sp_pass_consent`: this will instruct the web script to wait for the consent to be injected before "talking" to SP endpoints and loading a message.

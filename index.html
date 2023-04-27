@@ -22,32 +22,14 @@
             ccpa: {},
             gdpr: {},
             events: {
-                onMessageChoiceSelect: function() {
-                    window.postMessage({ name: 'onMessageChoiceSelect', payload: { arguments } }, '*');
-                },
-                onMessageReady: function() {
-                    window.postMessage({ name: 'onMessageReady', payload: { arguments } }, '*');
-                },
-                onMessageChoiceError: function() {
-                    window.postMessage({ name: 'onMessageChoiceError', payload: { arguments } }, '*');
-                },
-                onPrivacyManagerAction: function() {
-                    window.postMessage({ name: 'onPrivacyManagerAction', payload: { arguments } }, '*');
-                },
-                onPMCancel: function() {
-                    window.postMessage({ name: 'onPMCancel', payload: { arguments } }, '*');
-                },
-                onMessageReceiveData: function() {
-                    window.postMessage({ name: 'onMessageReceiveData', payload: { arguments } }, '*');
-                },
-                onSPPMObjectReady: function() {
-                    window.postMessage({ name: 'onSPPMObjectReady', payload: { arguments } }, '*');
-                },
-                onConsentReady: function (consentUUID, euconsent) {
-                    window.postMessage({ name: 'onConsentReady', payload: { arguments } }, '*');
+                onConsentReady: function (campaignType, uuid, consent) {
+                    window.postMessage({ 
+                        name: 'onConsentReady',
+                        payload: { campaignType, uuid, consent }
+                    }, '*');
                 },
                 onError: function() {
-                    window.postMessage({ name: 'onError', payload: { arguments } }, '*');
+                    window.postMessage({ name: 'onError', payload: { ...arguments } }, '*');
                 },
             }
         }
@@ -58,14 +40,18 @@
     <script src='https://d3fkv551xkjrmm.cloudfront.net/js/messaging.js'></script>
 </head>
 <body style="padding: 0; margin: 0">
-    <div style="padding: 8px;">
-        <h1>Test Page</h1>
-        <div>
-            <h2>
-                <i>postMessage</i> events
-            </h2>
-            <pre id="postMessage" style="background-color: #cecece; height: 600px; margin: 0; box-sizing: border-box; padding: 12px; overflow: scroll; display: block;"></pre>
-        </div>
+    <div style="padding: 0px;">
+        <h1>Consent Transfer Test</h1>
+        <pre id="postMessage" style="width: 100%; background-color: #cecece; height: 100%; margin: 0; box-sizing: border-box; padding: 8px; white-space: pre-wrap; margin:auto;
+            text-align:justify;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            -ms-word-break: break-word;
+            word-break: break-word;
+            -ms-hyphens: auto;
+            -moz-hyphens: auto;
+            -webkit-hyphens: auto;
+            hyphens: auto;"></pre>
     </div>
     <script>
         window.addEventListener('message', (event) => {
