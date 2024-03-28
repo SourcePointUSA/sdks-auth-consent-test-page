@@ -12,31 +12,38 @@
 </script>
 
     <script>
-    window._sp_queue = [];
-    window._sp_ = {
-        config: {
-            accountId: 22,
-            baseEndpoint: 'https://cdn.privacy-mgmt.com',
-            propertyHref: 'https://sdks-auth-consent-test-page',
-            propertyId: 31007,
-            ccpa: {},
-            gdpr: {},
-            events: {
-                onConsentReady: function (campaignType, uuid, consent) {
-                    window.postMessage({ 
-                        name: 'onConsentReady',
-                        payload: { campaignType, uuid, consent }
-                    }, '*');
-                },
-                onError: function() {
-                    window.postMessage({ name: 'onError', payload: { ...arguments } }, '*');
-                },
+        const params = new URLSearchParams(window.location.search);
+        const accountId = params.get('accountId') || 22
+        const propertyId = params.get('propertyId') || 31007
+        const propertyName = params.get('propertyName') || 'sdks-auth-consent-test-page'
+        window._sp_queue = [];
+        window._sp_ = {
+            config: {
+                accountId,
+                baseEndpoint: 'https://cdn.privacy-mgmt.com',
+                propertyHref: `https://${propertyName}`,
+                propertyId,
+                ccpa: {},
+                gdpr: {},
+                events: {
+                    onConsentReady: function (campaignType, uuid, consent) {
+                        window.postMessage({
+                            name: 'onConsentReady',
+                            payload: { campaignType, uuid, consent }
+                        }, '*');
+                    },
+                    onError: function() {
+                        window.postMessage({
+                            name: 'onError',
+                            payload: { ...arguments }
+                        }, '*');
+                    },
+                }
             }
         }
-    }
     </script>
     <script src='https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js' async></script>
-    
+
     <script src='https://d3fkv551xkjrmm.cloudfront.net/js/messaging.js'></script>
 </head>
 <body style="padding: 0; margin: 0">
