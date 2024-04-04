@@ -12,9 +12,18 @@
 </script>
 
     <script>
+        // parse "foo,bar" to {foo: {}, bar: {}}
+        const stringListToObject = (stringList) =>
+            stringList
+                .replace(/ /g, '')
+                .split(',')
+                .reduce((acc, current) => ({ ...acc, [current]: {} }), {})
+
         const params = new URLSearchParams(window.location.search);
         const accountId = params.get('accountId') || 22
         const propertyId = params.get('propertyId') || 31007
+        const campaigns = stringListToObject(params.get('campaigns') || "gdpr,ccpa")
+
         const propertyName = params.get('propertyName') || 'sdks-auth-consent-test-page'
         window._sp_queue = [];
         window._sp_ = {
@@ -23,8 +32,7 @@
                 baseEndpoint: 'https://cdn.privacy-mgmt.com',
                 propertyHref: `https://${propertyName}`,
                 propertyId,
-                ccpa: {},
-                gdpr: {},
+                ...campaigns,
                 events: {
                     onConsentReady: function (campaignType, uuid, consent) {
                         window.postMessage({
