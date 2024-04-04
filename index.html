@@ -5,58 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Sourcepoint</title>
-
     <link rel="stylesheet" href="./styles.css">
-
-    <script src="./legislationStubs.js"></script>
-
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const accountId = params.get('accountId') || 22
-        const propertyId = params.get('propertyId') || 16893
-        const propertyName = params.get('propertyName') || 'mobile.multicampaign.demo'
-        const campaigns = JSON.parse(params.get('campaigns') || `{"gdpr":{},"ccpa":{}}`)
-
-        window._sp_queue = [];
-        window._sp_ = {
-            config: {
-                accountId,
-                propertyId,
-                ...campaigns,
-                baseEndpoint: 'https://cdn.privacy-mgmt.com',
-                propertyHref: `https://${propertyName}`,
-                events: {
-                    onConsentReady: (campaignType, uuid, consent) => {
-                        window.postMessage({
-                            name: 'onConsentReady',
-                            payload: { campaignType, uuid, consent }
-                        }, '*');
-                    },
-                    onError: (...args) => {
-                        window.postMessage({
-                            name: 'onError',
-                            payload: { ...args }
-                        }, '*');
-                    },
-                }
-            }
-        }
-    </script>
-    <script defer>
-        // displays `message` events on the screen
-        window.addEventListener('message', (event) => {
-            var pmPre = document.getElementById("postMessage")
-            if(event.data !== undefined && event.data !== "undefined") {
-                pmPre.innerText = `${JSON.stringify(event.data, null, 2)}\n\n${pmPre.innerText}`
-            }
-        })
-    </script>
-    <script src='https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js' async></script>
 </head>
 <body>
     <div class="container">
         <h1>Consent Transfer Test</h1>
         <pre id="postMessage"></pre>
     </div>
+    <script defer src="./legislationStubs.js"></script>
+    <script defer src="./main.js"></script>
+    <script defer src='https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js'></script>
 </body>
 </html>
