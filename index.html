@@ -11,18 +11,11 @@
     <script src="./legislationStubs.js"></script>
 
     <script>
-        // map "foo,bar" to {foo: {}, bar: {}}
-        const stringListToObject = (stringList) =>
-            stringList
-                .replace(/ /g, '')
-                .split(',')
-                .reduce((acc, current) => ({ ...acc, [current]: {} }), {})
-
         const params = new URLSearchParams(window.location.search);
         const accountId = params.get('accountId') || 22
         const propertyId = params.get('propertyId') || 16893
-        const campaigns = stringListToObject(params.get('campaigns') || "gdpr,ccpa")
         const propertyName = params.get('propertyName') || 'mobile.multicampaign.demo'
+        const campaigns = JSON.parse(params.get('campaigns') || `{"gdpr":{},"ccpa":{}}`)
 
         window._sp_queue = [];
         window._sp_ = {
