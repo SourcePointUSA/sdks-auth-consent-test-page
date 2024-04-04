@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Sourcepoint</title>
 
-    <script>function _typeof(t){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(){for(var t,e,o=[],n=window,r=n;r;){try{if(r.frames.__tcfapiLocator){t=r;break}}catch(t){}if(r===n.top)break;r=n.parent}t||(function t(){var e=n.document,o=!!n.frames.__tcfapiLocator;if(!o)if(e.body){var r=e.createElement("iframe");r.style.cssText="display:none",r.name="__tcfapiLocator",e.body.appendChild(r)}else setTimeout(t,5);return!o}(),n.__tcfapi=function(){for(var t=arguments.length,n=new Array(t),r=0;r<t;r++)n[r]=arguments[r];if(!n.length)return o;"setGdprApplies"===n[0]?n.length>3&&2===parseInt(n[1],10)&&"boolean"==typeof n[3]&&(e=n[3],"function"==typeof n[2]&&n[2]("set",!0)):"ping"===n[0]?"function"==typeof n[2]&&n[2]({gdprApplies:e,cmpLoaded:!1,cmpStatus:"stub"}):o.push(n)},n.addEventListener("message",(function(t){var e="string"==typeof t.data,o={};if(e)try{o=JSON.parse(t.data)}catch(t){}else o=t.data;var n="object"===_typeof(o)?o.__tcfapiCall:null;n&&window.__tcfapi(n.command,n.version,(function(o,r){var a={__tcfapiReturn:{returnValue:o,success:r,callId:n.callId}};t&&t.source&&t.source.postMessage&&t.source.postMessage(e?JSON.stringify(a):a,"*")}),n.parameter)}),!1))}();</script>
+    <link rel="stylesheet" href="./styles.css">
 
-    <script>(function () { var e = false; var c = window; var t = document; function r() { if (!c.frames["__uspapiLocator"]) { if (t.body) { var a = t.body; var e = t.createElement("iframe"); e.style.cssText = "display:none"; e.name = "__uspapiLocator"; a.appendChild(e) } else { setTimeout(r, 5) } } } r(); function p() { var a = arguments; __uspapi.a = __uspapi.a || []; if (!a.length) { return __uspapi.a } else if (a[0] === "ping") { a[2]({ gdprAppliesGlobally: e, cmpLoaded: false }, true) } else { __uspapi.a.push([].slice.apply(a)) } } function l(t) { var r = typeof t.data === "string"; try { var a = r ? JSON.parse(t.data) : t.data; if (a.__cmpCall) { var n = a.__cmpCall; c.__uspapi(n.command, n.parameter, function (a, e) { var c = { __cmpReturn: { returnValue: a, success: e, callId: n.callId } }; t.source.postMessage(r ? JSON.stringify(c) : c, "*") }) } } catch (a) { } } if (typeof __uspapi !== "function") { c.__uspapi = p; __uspapi.msgHandler = l; c.addEventListener("message", l, false) } })();
-</script>
+    <script src="./legislationStubs.js"></script>
 
     <script>
-        // parse "foo,bar" to {foo: {}, bar: {}}
+        // map "foo,bar" to {foo: {}, bar: {}}
         const stringListToObject = (stringList) =>
             stringList
                 .replace(/ /g, '')
@@ -21,54 +20,37 @@
 
         const params = new URLSearchParams(window.location.search);
         const accountId = params.get('accountId') || 22
-        const propertyId = params.get('propertyId') || 31007
+        const propertyId = params.get('propertyId') || 16893
         const campaigns = stringListToObject(params.get('campaigns') || "gdpr,ccpa")
+        const propertyName = params.get('propertyName') || 'mobile.multicampaign.demo'
 
-        const propertyName = params.get('propertyName') || 'sdks-auth-consent-test-page'
         window._sp_queue = [];
         window._sp_ = {
             config: {
                 accountId,
-                baseEndpoint: 'https://cdn.privacy-mgmt.com',
-                propertyHref: `https://${propertyName}`,
                 propertyId,
                 ...campaigns,
+                baseEndpoint: 'https://cdn.privacy-mgmt.com',
+                propertyHref: `https://${propertyName}`,
                 events: {
-                    onConsentReady: function (campaignType, uuid, consent) {
+                    onConsentReady: (campaignType, uuid, consent) => {
                         window.postMessage({
                             name: 'onConsentReady',
                             payload: { campaignType, uuid, consent }
                         }, '*');
                     },
-                    onError: function() {
+                    onError: (...args) => {
                         window.postMessage({
                             name: 'onError',
-                            payload: { ...arguments }
+                            payload: { ...args }
                         }, '*');
                     },
                 }
             }
         }
     </script>
-    <script src='https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js' async></script>
-
-    <script src='https://d3fkv551xkjrmm.cloudfront.net/js/messaging.js'></script>
-</head>
-<body style="padding: 0; margin: 0">
-    <div style="padding: 0px;">
-        <h1>Consent Transfer Test</h1>
-        <pre id="postMessage" style="width: 100%; background-color: #cecece; height: 100%; margin: 0; box-sizing: border-box; padding: 8px; white-space: pre-wrap; margin:auto;
-            text-align:justify;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            -ms-word-break: break-word;
-            word-break: break-word;
-            -ms-hyphens: auto;
-            -moz-hyphens: auto;
-            -webkit-hyphens: auto;
-            hyphens: auto;"></pre>
-    </div>
     <script>
+        // displays `message` events on the screen
         window.addEventListener('message', (event) => {
             var pmPre = document.getElementById("postMessage")
             if(event.data !== undefined && event.data !== "undefined") {
@@ -76,5 +58,12 @@
             }
         })
     </script>
+    <script src='https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js' async></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Consent Transfer Test</h1>
+        <pre id="postMessage"></pre>
+    </div>
 </body>
 </html>

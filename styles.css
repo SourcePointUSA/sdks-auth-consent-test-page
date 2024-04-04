@@ -1,0 +1,23 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    padding: 0px;
+}
+
+#postMessage {
+    width: 100%; background-color: #cecece; height: 100%; margin: 0; box-sizing: border-box; padding: 8px;
+    white-space: pre-wrap;
+    margin:auto;
+    text-align:justify;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    -ms-word-break: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
